@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body style="display: flex; flex-direction: column; width: 600px;">
+    <img id="coffeeImg" src="/assets/coffee.png" style="width: 100%;" />
+    <div style="display: flex;">
+        <button id="presignButton">get presigned url</button>
+        <input id="presignInput" style="flex-grow: 1;">
+    </div>
+    <div style="display: flex;">
+        <button id="submit">post image</button>
+    </div>
+
+    <script>
+        var presignButton = document.getElementById('presignButton');
+        var presignInput = document.getElementById('presignInput');
+        var presignUrl;
+        presignButton.addEventListener('click', () => {
+            var url = fetch('/presigned')
+                .then(res => res.text())
+                .then(url => {
+                    presignInput.value = url
+                    presignUrl = url;
+                    console.log(presignUrl);
+                });
+        })
+
+        
+        var image = document.getElementById('coffeeImg');
+        var file;
+        fetch(image.src)
+            .then(res => res.blob())
+            .then(blob => {
+                file = new File([blob], 'test', blob)
+            })
+
+        var submit = document.getElementById('submit');
+        submit.addEventListener('click', () => {
+            if (!presignUrl) console.error(`no url: '${presignUrl}'`);
+            if (!file) console.error(`no file: '${file}'`);
+            fetch(presignUrl, { method: 'PUT', body: file,})
+                .then(res => console.log(res.statusText))
+        })
+    </script>
+</body>
+
+</html>

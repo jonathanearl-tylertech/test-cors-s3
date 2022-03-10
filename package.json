@@ -1,0 +1,21 @@
+{
+  "name": "test-cors-s3",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./src/main.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.53.1",
+    "@aws-sdk/s3-request-presigner": "^3.53.1",
+    "@types/express": "^4.17.13",
+    "aws-sdk": "^2.1089.0",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3"
+  }
+}
